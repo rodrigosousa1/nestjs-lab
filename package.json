@@ -1,0 +1,37 @@
+{
+  "name": "nestjs-lab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:watch": "nodemon",
+    "prestart:prod": "tsc",
+    "start:prod": "node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodrigosousa1/nestjs-lab.git"
+  },
+  "author": "Rodrigo Oliveira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rodrigosousa1/nestjs-lab/issues"
+  },
+  "homepage": "https://github.com/rodrigosousa1/nestjs-lab#readme",
+  "dependencies": {
+    "@nestjs/common": "^4.2.2",
+    "@nestjs/core": "^4.2.2",
+    "@nestjs/microservices": "^4.2.2",
+    "@nestjs/testing": "^4.2.2",
+    "@nestjs/websockets": "^4.2.2",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^5.5.2",
+    "typescript": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.53",
+    "nodemon": "^1.12.1",
+    "ts-node": "^3.3.0"
+  }
+}
