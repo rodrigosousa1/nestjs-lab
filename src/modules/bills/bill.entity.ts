@@ -1,15 +1,18 @@
-import { Table, Column, Model } from 'sequelize-typescript';
+import { AllowNull, Column, Model, Table } from 'sequelize-typescript';
 import { DataType } from 'sequelize-typescript';
 
 @Table
-export class Bills extends Model<Bills> {
-    
+export class Bill extends Model<Bill> {
+
+    @AllowNull(false)
     @Column
     title: string;
 
+    @AllowNull(false)
     @Column(DataType.TIME)
     dueDate: string;
 
+    @AllowNull(false)
     @Column(DataType.NUMERIC)
     amount: number;
 }

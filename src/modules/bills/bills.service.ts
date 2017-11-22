@@ -1,17 +1,34 @@
 import { Component, Inject } from '@nestjs/common';
 import { Model } from 'sequelize-typescript';
 
-import { Bills } from './bills.entity';
-
-
-
+import { Bill } from './bill.entity';
+import { CreateBillDto } from './dto/create-bill.dto';
 
 
 @Component()
 export class BillsService {
-    constructor(@Inject('BillsRepository') private billsRepository: typeof Model) {}
+    constructor(
+        @Inject('BillsRepository') 
+        private billsRepository: typeof Model) {}
 
-    async findAll(): Promise<Bills[]> {
-        return await this.billsRepository.findAll<Bills>();
+    async create(createBillDto: CreateBillDto): Promise<Bill> {
+        const bill = new Bill(createBillDto);
+        return await bill.save();
+    }
+
+    async getBill(id: number): Promise<Bill> {
+        return await this.billsRepository.findById<Bill>(id);
+    }
+
+    async update(id: number, props: any): Promise<[number, Bill[]]> {
+        return await this.billsRepository.update<Bill>(props, { where: { id } });
+    }
+
+    async getAllBills(): Promise<Bill[]> {
+        return await this.billsRepository.findAll<Bill>();
+    }
+
+    async delete(id: number): Promise<number> {
+        return await this.billsRepository.destroy({ where: { id } })
     }
 }
