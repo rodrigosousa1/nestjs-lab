@@ -1,18 +1,22 @@
 import { AllowNull, Column, Model, Table } from 'sequelize-typescript';
 import { DataType } from 'sequelize-typescript';
 
-@Table
+@Table({ 
+    tableName: 'Bills',
+    timestamps: true,
+    paranoid: true
+})
 export class Bill extends Model<Bill> {
 
     @AllowNull(false)
-    @Column
+    @Column(DataType.STRING(30))
     title: string;
 
     @AllowNull(false)
-    @Column(DataType.TIME)
+    @Column(DataType.DATE)
     dueDate: string;
 
     @AllowNull(false)
-    @Column(DataType.NUMERIC)
+    @Column(DataType.NUMERIC(8,2))
     amount: number;
 }

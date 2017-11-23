@@ -14,8 +14,11 @@ export const databaseProviders = [
                 password: 'r00t',
                 database: 'bc-database'
             });
+
             sequelize.addModels([Bill]);
+
             await sequelize.sync();
+            
             return sequelize;
         }
     }
