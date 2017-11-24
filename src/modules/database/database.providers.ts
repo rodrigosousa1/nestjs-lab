@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 
 import { Bill } from '../bills/bill.entity';
+import { User } from '../users/user.entity';
 
 export const databaseProviders = [
     {
@@ -15,7 +16,7 @@ export const databaseProviders = [
                 database: 'bc-database'
             });
 
-            sequelize.addModels([Bill]);
+            sequelize.addModels([Bill, User]);
 
             await sequelize.sync();
             
