@@ -1,4 +1,4 @@
-import { AllowNull, Column, Model, Table, Unique } from 'sequelize-typescript';
+import { AllowNull, Column, Default, Model, Table, Unique } from 'sequelize-typescript';
 import { DataType } from 'sequelize-typescript';
 
 
@@ -23,6 +23,7 @@ export class User extends Model<User> {
     password: string
 
     @AllowNull(false)
+    @Default(false)
     @Column(DataType.BOOLEAN)
     isAdmin: boolean
 

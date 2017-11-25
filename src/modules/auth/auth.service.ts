@@ -1,8 +1,8 @@
-import { User } from '../users/user.entity';
 import { Component, Inject, UnauthorizedException } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import { Model } from 'sequelize-typescript';
 
+import { User } from '../users/user.entity';
 import { AUTH_CONFIG } from './auth.config';
 
 @Component()

@@ -26,7 +26,7 @@ export class BillsController {
     }
 
     @Patch(':id') 
-    async update(@Param('id', new ParseIntPipe()) id: number, @Body() props: any):Promise<[number, Bill[]]> {
+    async update(@Param('id', new ParseIntPipe()) id: number, @Body() props: any): Promise<[number, Bill[]]> {
         return await this.billsService.update(id, props);
     }
 
