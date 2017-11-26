@@ -1,7 +1,16 @@
-import { AllowNull, Column, Default, Model, Table, Unique } from 'sequelize-typescript';
+import { AllowNull, Column, Default, DefaultScope, HasMany, Model, Scopes, Table, Unique } from 'sequelize-typescript';
 import { DataType } from 'sequelize-typescript';
 
+import { Bill } from '../bills/bill.entity';
 
+@DefaultScope({
+    attributes: ['id', 'name', 'email', 'isAdmin']
+})
+@Scopes({
+    full: {
+        include:[() => Bill]
+    }
+})
 @Table({ 
     tableName: 'Users',
     timestamps: true,
@@ -11,20 +20,23 @@ export class User extends Model<User> {
     
     @AllowNull(false)
     @Column(DataType.STRING(30))
-    name: string
+    name: string;
 
     @AllowNull(false)
     @Unique
     @Column(DataType.STRING(80))
-    email: string
+    email: string;
 
     @AllowNull(false)
     @Column(DataType.STRING(30))
-    password: string
+    password: string;
 
     @AllowNull(false)
     @Default(false)
     @Column(DataType.BOOLEAN)
-    isAdmin: boolean
+    isAdmin: boolean;
+
+    @HasMany(() => Bill)
+    bills: Bill[]
 
 }

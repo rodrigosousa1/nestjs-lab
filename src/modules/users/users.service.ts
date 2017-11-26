@@ -16,7 +16,8 @@ export class UsersService {
     }
 
     async getUser(id: number): Promise<User> {
-        return await this.usersRepository.findById<User>(id);
+        const fullScope = this.usersRepository.scope('full');
+        return await fullScope.findById<User>(id);
     }
 
     async update(id: number, props: any): Promise<[number, User[]]> {

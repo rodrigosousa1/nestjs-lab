@@ -17,7 +17,8 @@ export class BillsService {
     }
 
     async getBill(id: number): Promise<Bill> {
-        return await this.billsRepository.findById<Bill>(id);
+        const fullScope = this.billsRepository.scope('full');
+        return await fullScope.findById<Bill>(id);
     }
 
     async update(id: number, props: any): Promise<[number, Bill[]]> {
