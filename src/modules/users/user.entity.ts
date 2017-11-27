@@ -9,6 +9,9 @@ import { Bill } from '../bills/bill.entity';
 @Scopes({
     full: {
         include:[() => Bill]
+    },
+    auth: {
+        attributes: ['id', 'name', 'email', 'password', 'isAdmin']
     }
 })
 @Table({ 

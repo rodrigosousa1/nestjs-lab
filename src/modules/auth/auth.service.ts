@@ -12,6 +12,8 @@ export class AuthService {
         private usersRepository: typeof Model) {}
 
     async createToken(payload) {
+        delete payload.password;
+        
         const expiresIn = AUTH_CONFIG.jwtAuth.jwtExpiresIn;
         const secretOrKey = AUTH_CONFIG.jwtAuth.jwtSecret;
         const token = jwt.sign(payload, secretOrKey, { expiresIn });
@@ -36,15 +38,16 @@ export class AuthService {
      async signInWithEmail(credentials) {
         const { email, password } = credentials;
         const user = await this.findUserByEmail(email);
-
+ 
         if(!user || user.get('password') !== password)
              throw new UnauthorizedException();
-        
+
         return this.createToken(user.toJSON());
     }
 
     private async findUserByEmail(email: string): Promise<User> {
-        return await this.usersRepository.findOne<User>({ where: { email }});
+        const authScope = this.usersRepository.scope('auth');
+        return await authScope.findOne<User>({ where: { email }});
     }
 
 }
