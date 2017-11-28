@@ -1,5 +1,17 @@
-import { AllowNull, Column, Default, DefaultScope, HasMany, Model, Scopes, Table, Unique } from 'sequelize-typescript';
-import { DataType } from 'sequelize-typescript';
+import * as bcrypt from 'bcrypt';
+import {
+    AllowNull,
+    BeforeCreate,
+    Column,
+    DataType,
+    Default,
+    DefaultScope,
+    HasMany,
+    Model,
+    Scopes,
+    Table,
+    Unique,
+} from 'sequelize-typescript';
 
 import { Bill } from '../bills/bill.entity';
 
@@ -31,7 +43,7 @@ export class User extends Model<User> {
     email: string;
 
     @AllowNull(false)
-    @Column(DataType.STRING(30))
+    @Column(DataType.STRING)
     password: string;
 
     @AllowNull(false)
@@ -41,5 +53,11 @@ export class User extends Model<User> {
 
     @HasMany(() => Bill)
     bills: Bill[]
+
+    @BeforeCreate
+    static async hashPassword(instance: User) {
+        const hashedPw = await bcrypt.hash(instance.password, 10);
+        instance.password = hashedPw;
+    }
 
 }

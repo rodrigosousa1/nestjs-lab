@@ -25,6 +25,7 @@
     "@nestjs/microservices": "^4.4.1",
     "@nestjs/testing": "^4.4.1",
     "@nestjs/websockets": "^4.4.1",
+    "bcrypt": "^1.0.3",
     "class-transformer": "^0.1.8",
     "class-validator": "^0.7.3",
     "jsonwebtoken": "^8.1.0",
@@ -38,6 +39,7 @@
     "typescript": "^2.6.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^1.0.0",
     "@types/node": "^8.0.53",
     "@types/sequelize": "^4.0.79",
     "nodemon": "^1.12.1",

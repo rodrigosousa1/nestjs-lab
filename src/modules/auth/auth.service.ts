@@ -1,4 +1,5 @@
 import { Component, Inject, UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { Model } from 'sequelize-typescript';
 
@@ -38,10 +39,11 @@ export class AuthService {
      async signInWithEmail(credentials) {
         const { email, password } = credentials;
         const user = await this.findUserByEmail(email);
- 
-        if(!user || user.get('password') !== password)
-             throw new UnauthorizedException();
+        const result = (!user) ? false : await bcrypt.compare(password, user.get('password'));
 
+        if(!result)
+             throw new UnauthorizedException();
+            
         return this.createToken(user.toJSON());
     }
 
