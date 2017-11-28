@@ -21,7 +21,7 @@ export class UsersService {
     }
 
     async update(id: number, props: any): Promise<[number, User[]]> {
-        return await this.usersRepository.update<User>(props, { where: { id } });
+        return await this.usersRepository.update<User>(props, { where: { id }, individualHooks: true });
     }
 
     async getAllUsers(): Promise<User[]> {

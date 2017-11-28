@@ -2,6 +2,7 @@ import * as bcrypt from 'bcrypt';
 import {
     AllowNull,
     BeforeCreate,
+    BeforeUpdate,
     Column,
     DataType,
     Default,
@@ -14,6 +15,7 @@ import {
 } from 'sequelize-typescript';
 
 import { Bill } from '../bills/bill.entity';
+
 
 @DefaultScope({
     attributes: ['id', 'name', 'email', 'isAdmin']
@@ -55,7 +57,10 @@ export class User extends Model<User> {
     bills: Bill[]
 
     @BeforeCreate
+    @BeforeUpdate
     static async hashPassword(instance: User) {
+        if(!instance.password) return;
+
         const hashedPw = await bcrypt.hash(instance.password, 10);
         instance.password = hashedPw;
     }
