@@ -18,11 +18,11 @@ import { Bill } from '../bills/bill.entity';
 
 
 @DefaultScope({
-    attributes: ['id', 'name', 'email', 'isAdmin']
+    attributes: ['id', 'name', 'email']
 })
 @Scopes({
     full: {
-        attributes:['id', 'name', 'email', 'isAdmin', 'createdAt', 'updatedAt', 'deletedAt'],
+        attributes:['id', 'name', 'email', 'createdAt', 'updatedAt', 'deletedAt'],
         include:[() => Bill]
     },
     auth: {

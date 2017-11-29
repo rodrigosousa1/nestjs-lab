@@ -1,14 +1,17 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes } from '@nestjs/common';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { AdminGuard } from '../../guards/admin.guard';
 
 @Controller('users')
 export class UsersController {
     constructor(private usersService: UsersService) {}
     
+
     @Get()
+    @UseGuards(AdminGuard)
     async getAllUsers(): Promise<User[]> {
         return await this.usersService.getAllUsers();
     }
