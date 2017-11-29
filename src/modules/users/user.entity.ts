@@ -22,7 +22,7 @@ import { Bill } from '../bills/bill.entity';
 })
 @Scopes({
     full: {
-        attributes:['id', 'name', 'email', 'isAdmin'],
+        attributes:['id', 'name', 'email', 'isAdmin', 'createdAt', 'updatedAt', 'deletedAt'],
         include:[() => Bill]
     },
     auth: {

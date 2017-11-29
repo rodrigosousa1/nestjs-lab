@@ -17,9 +17,9 @@ import { User } from '../users/user.entity';
     paranoid: true
 })
 export class Bill extends Model<Bill> {
-
-    @ForeignKey(() => User)
+    
     @AllowNull(false)
+    @ForeignKey(() => User)
     @Column(DataType.INTEGER)
     userId: number;
 
