@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Component, Inject, NotFoundException } from '@nestjs/common';
 import { Model } from 'sequelize-typescript';
 
 import { Bill } from './bill.entity';
@@ -17,8 +17,12 @@ export class BillsService {
     }
 
     async getBill(id: number): Promise<Bill> {
-        const fullScope = this.billsRepository.scope('full');
-        return await fullScope.findById<Bill>(id);
+        const result = await this.billsRepository.scope('full').findById<Bill>(id);
+        
+        if(!result) 
+            throw new NotFoundException();
+    
+        return result;
     }
 
     async update(id: number, props: any): Promise<[number, Bill[]]> {

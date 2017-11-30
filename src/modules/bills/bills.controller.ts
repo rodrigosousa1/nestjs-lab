@@ -16,7 +16,7 @@ export class BillsController {
     @Get(':id')
     @UsePipes(new ParseIntPipe())
     async getBill(@Param('id') id: number): Promise<Bill> {
-        return await this.billsService.getBill(id);
+        return await this.billsService.getBill(id);   
     }
 
 

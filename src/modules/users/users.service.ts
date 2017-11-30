@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Component, Inject, NotFoundException } from '@nestjs/common';
 import { Model } from 'sequelize-typescript';
 
 import { CreateUserDto } from './dto/create-user.dto';
@@ -16,8 +16,12 @@ export class UsersService {
     }
 
     async getUser(id: number): Promise<User> {
-        const fullScope = this.usersRepository.scope('full');
-        return await fullScope.findById<User>(id);
+        const result = this.usersRepository.scope('full').findById<User>(id);
+
+        if(!result) 
+             throw new NotFoundException();
+
+        return result;
     }
 
     async update(id: number, props: any): Promise<[number, User[]]> {
