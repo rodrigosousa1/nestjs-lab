@@ -22,6 +22,12 @@ export class UsersController {
         return await this.usersService.getUser(id);
     }
 
+    @Get(':id/bills')
+    @UsePipes(new ParseIntPipe())
+    async getUserBills(@Param('id') id: number): Promise<User> {
+        return await this.usersService.getUserBills(id);
+    }
+
     @Post()
     async create(@Body() createUserDto: CreateUserDto): Promise<User> {
         return await this.usersService.create(createUserDto);

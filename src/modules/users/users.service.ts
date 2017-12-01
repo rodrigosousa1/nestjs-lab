@@ -16,11 +16,16 @@ export class UsersService {
     }
 
     async getUser(id: number): Promise<User> {
-        const result = await this.usersRepository.scope('full').findById<User>(id);
-        if(!result) 
-             throw new NotFoundException();
+       return await this.usersRepository.scope('userDetail')
+            .findById<User>(id)
+            .then(this.checkNullReturn);
+    
+    }
 
-        return result;
+    async getUserBills(id: number): Promise<User> {
+        return await this.usersRepository.scope('userBills')
+             .findById<User>(id)
+             .then(this.checkNullReturn);
     }
 
     async update(id: number, props: any): Promise<[number, User[]]> {
@@ -35,10 +40,17 @@ export class UsersService {
         return await this.usersRepository.destroy({ where: { id }});
     }
 
-    private errorHandler(err?: any) {
+    private errorHandler(err: any) {
         const { name, errors } = err;
         if(name === 'SequelizeUniqueConstraintError')
             throw new ConflictException(`${errors[0].path} ${errors[0].value} already exists`);
+    }
+
+    private checkNullReturn(data: any) {
+        if(!data)
+           throw new NotFoundException();
+
+        return data;
     }
 
 
