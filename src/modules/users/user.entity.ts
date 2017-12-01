@@ -21,15 +21,15 @@ import { Bill } from '../bills/bill.entity';
     attributes: ['id', 'name', 'email']
 })
 @Scopes({
+    auth: {
+        attributes: ['id', 'name', 'email', 'password', 'isAdmin']
+    },
     userDetail: {
         attributes:['id', 'name', 'email', 'createdAt', 'updatedAt', 'deletedAt'],
     },
     userBills: {
         attributes:['id', 'name', 'email'],
         include:[() => Bill]
-    },
-    auth: {
-        attributes: ['id', 'name', 'email', 'password', 'isAdmin']
     }
 })
 @Table({ 

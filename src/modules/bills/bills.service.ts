@@ -1,8 +1,10 @@
+import { checkNullReturn } from '../../utils';
 import { Component, Inject, NotFoundException } from '@nestjs/common';
 import { Model } from 'sequelize-typescript';
 
 import { Bill } from './bill.entity';
 import { CreateBillDto } from './dto/create-bill.dto';
+
 
 
 @Component()
@@ -17,12 +19,9 @@ export class BillsService {
     }
 
     async getBill(id: number): Promise<Bill> {
-        const result = await this.billsRepository.scope('full').findById<Bill>(id);
-        
-        if(!result) 
-            throw new NotFoundException();
-    
-        return result;
+       return await this.billsRepository.scope('full')
+            .findById<Bill>(id)
+            .then(checkNullReturn);
     }
 
     async update(id: number, props: any): Promise<[number, Bill[]]> {
@@ -36,4 +35,5 @@ export class BillsService {
     async delete(id: number): Promise<number> {
         return await this.billsRepository.destroy({ where: { id } })
     }
+
 }

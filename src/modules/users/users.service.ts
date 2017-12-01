@@ -1,6 +1,7 @@
-import { Component, Inject, NotFoundException, ConflictException } from '@nestjs/common';
+import { Component, ConflictException, Inject } from '@nestjs/common';
 import { Model } from 'sequelize-typescript';
 
+import { checkNullReturn } from '../../utils';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 
@@ -18,14 +19,14 @@ export class UsersService {
     async getUser(id: number): Promise<User> {
        return await this.usersRepository.scope('userDetail')
             .findById<User>(id)
-            .then(this.checkNullReturn);
+            .then(checkNullReturn);
     
     }
 
     async getUserBills(id: number): Promise<User> {
         return await this.usersRepository.scope('userBills')
              .findById<User>(id)
-             .then(this.checkNullReturn);
+             .then(checkNullReturn);
     }
 
     async update(id: number, props: any): Promise<[number, User[]]> {
@@ -46,12 +47,6 @@ export class UsersService {
             throw new ConflictException(`${errors[0].path} ${errors[0].value} already exists`);
     }
 
-    private checkNullReturn(data: any) {
-        if(!data)
-           throw new NotFoundException();
-
-        return data;
-    }
 
 
 }
